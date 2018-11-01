@@ -1,0 +1,23 @@
+- model: articles.articlemodel
+  pk: 1000
+  fields:
+    user: 1
+    title: test title 1000
+    counter: 0
+    modified_at: !!timestamp '2018-10-22 18:49:01.059535+00:00'
+- model: articles.revisionmodel
+  pk: 1000
+  fields:
+    article: 1000
+    parent_id: 0
+    comment: ''
+    text: same text
+    created_at: !!timestamp '2018-10-22 18:44:06.746105+00:00'
+- model: articles.revisionmodel
+  pk: 1001
+  fields:
+    article: 1000
+    parent_id: 0
+    comment: ''
+    text: same text 2
+    created_at: !!timestamp '2018-10-22 18:44:07.746105+00:00'
