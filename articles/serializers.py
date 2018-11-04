@@ -34,7 +34,7 @@ class ArticleSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         article = ArticleModel.objects.create(
             title=validated_data['title'],
-            user=validated_data['user'],
+            user=validated_data.get('user'),
         )
 
         RevisionModel.objects.create(

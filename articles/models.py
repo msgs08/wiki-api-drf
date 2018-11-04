@@ -3,7 +3,7 @@ from django.db import models
 
 
 class ArticleModel(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=120, unique=True)
     counter = models.BigIntegerField(default=0)
     modified_at = models.DateTimeField(auto_now=True)
@@ -22,4 +22,3 @@ class RevisionModel(models.Model):
     class Meta:
         db_table = 'revisions'
         ordering = ('created_at',)
-

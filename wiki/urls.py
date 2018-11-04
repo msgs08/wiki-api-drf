@@ -22,23 +22,15 @@ from django.urls import path, include
 from django.views.generic import TemplateView
 from rest_framework_swagger.views import get_swagger_view
 
-
 schema_view = get_swagger_view(title='Pastebin API')
 
 # Use static() to add url mapping to serve static files during development (only)
 from django.conf import settings
 from django.conf.urls.static import static
 
-
-def index(request):
-    render(request, 'index.html')
-    # path_ = os.path.join(os.path.dirname(__file__), 'static', 'index.html')
-    # return HttpResponse(open(path_).read())
-
-
-
 urlpatterns = [
     path('simple-ui', TemplateView.as_view(template_name='index.html')),
+    # path('simple-ui', index),
     path('swagger/', schema_view),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
@@ -47,4 +39,3 @@ urlpatterns = [
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-
