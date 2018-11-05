@@ -1,39 +1,18 @@
 document.addEventListener('DOMContentLoaded', function () { // Аналог $(document).ready
         const app = document.getElementById('root');
         const container = document.createElement('div');
-        container.setAttribute('class', 'container');
+        container.setAttribute('id', 'container');
         app.appendChild(container);
 
         var request = new XMLHttpRequest();
-        request.open('GET', 'http://127.0.0.1:8000/articles/all/', true);
+        request.open('GET', '/articles/all/', true);
         request.onload = function () {
 
             // Begin accessing JSON data here
             var data = JSON.parse(this.response);
             if (request.status >= 200 && request.status < 400) {
                 data.forEach(item => {
-                    const card = document.createElement('div');
-                    card.setAttribute('class', 'card');
-
-                    const h1 = document.createElement('h1');
-                    const open_lnk = document.createElement('a');
-                    open_lnk.setAttribute('href', 'bbb/' + item.id);
-                    open_lnk.textContent = item.title;
-
-                    const p = document.createElement('p');
-                    p.textContent = item.title.substring(0, 300) + ' ...';  // TODO: change to item.description
-
-
-                    const edit_lnk = document.createElement('a');
-                    edit_lnk.setAttribute('href', 'aaa/' + item.id);
-                    edit_lnk.textContent = 'edit';
-
-
-                    container.appendChild(card);
-                    card.appendChild(h1);
-                    h1.appendChild(open_lnk);
-                    card.appendChild(p);
-                    card.appendChild(edit_lnk);
+                    draw_article(data = item, is_full = false);
                 });
             }
         };
@@ -78,3 +57,61 @@ $(document).on('submit', '#uploadForm', function (e) {
         },
     });
 });
+
+function draw_article(data, is_full) {
+    console.log('draw article', data, is_full)
+
+    const article = document.createElement('div');
+    article.setAttribute('class', 'article');
+
+    const h1 = document.createElement('h1');
+    const open_lnk = document.createElement('a');
+    open_lnk.setAttribute('href', '#' + data.id);
+    open_lnk.textContent = data.title;
+
+    const p = document.createElement('p');
+    var description = data.text || '';
+    if (is_full) {
+        p.textContent = description
+    } else {
+        p.textContent = description.substring(0, 300) + ' ...';  // TODO: change to item.description
+
+    }
+
+
+    const edit_lnk = document.createElement('a');
+    edit_lnk.setAttribute('href', '#');
+    edit_lnk.textContent = 'edit';
+
+    const rev_lnk = document.createElement('a');
+    rev_lnk.setAttribute('href', 'revisions/' + data.id);
+    rev_lnk.textContent = 'revisions';
+
+    var container = document.getElementById('container');
+    container.appendChild(article);
+    article.appendChild(h1);
+    h1.appendChild(open_lnk);
+    article.appendChild(p);
+    article.appendChild(edit_lnk);
+    article.appendChild(rev_lnk);
+
+}
+
+$(document).on('click', '.article h1 a', function () {
+    // your function here
+    var el = $(this)
+    console.log('113', el.text());
+    var container = $('#container');
+    container.empty();
+
+    $.ajax({
+        url: 'articles/read/' + el.text() + '/',
+        context: document.body
+    }).done(function (data) {
+        console.log('done', data);
+        draw_article(data = data, is_full = true);
+    });
+
+
+});
+

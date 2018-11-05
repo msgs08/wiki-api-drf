@@ -1,6 +1,9 @@
 div {
     margin: 20px;
 }
+a {
+    margin-right: 10px;
+}
 
 .auth {
     text-align: right;
@@ -11,12 +14,12 @@ div {
     margin: 20px;
 }
 
-.container {
+#container {
     float: left;
     margin: 20px;
 }
 
-.card h1 a {
+.article h1 a {
     text-decoration: none;
 }
 
