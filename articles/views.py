@@ -32,7 +32,6 @@ class ArticleReadView(APIView):
 class ArticlesListView(ListAPIView):
     permission_classes = (AllowAny,)
     serializer_class = ArticleSerializer
-    queryset = ArticleModel.objects.all()
 
 
 class RevisionsView(APIView):
@@ -61,7 +60,7 @@ class ArticleAddView(CreateAPIView):
 
 
 class ArticleEditView(CreateAPIView):
-    permission_classes = (IsAuthenticated,)
+    permission_classes = (AllowAny,)
     get_serializer = RevisionSerializer
 
     def post(self, request, *args, **kwargs):

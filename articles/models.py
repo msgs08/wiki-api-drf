@@ -13,7 +13,7 @@ class ArticleModel(models.Model):
 
 
 class RevisionModel(models.Model):
-    article = models.ForeignKey(ArticleModel, related_name='revision', on_delete=models.CASCADE)
+    article = models.ForeignKey(ArticleModel, related_name='revisions', on_delete=models.CASCADE)
     parent_id = models.IntegerField(default=0)
     comment = models.TextField(max_length=120)
     text = models.TextField(max_length=120)

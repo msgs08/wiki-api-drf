@@ -4,6 +4,7 @@ from articles import views
 
 app_name = 'articles'
 
+
 urlpatterns = [
     path('read/<str:title>/', views.ArticleReadView.as_view()),
     path('add/', views.ArticleAddView.as_view()),
@@ -12,5 +13,4 @@ urlpatterns = [
     path('all/', views.ArticlesListView.as_view()),
 
 ]
-
 

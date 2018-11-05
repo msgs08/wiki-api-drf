@@ -14,18 +14,20 @@ from articles.models import ArticleModel, RevisionModel
 if __name__ == '__main__':
     import logging
 
-    l = logging.getLogger('django.db.backends')
-    l.setLevel(logging.DEBUG)
-    l.addHandler(logging.StreamHandler())
+    # l = logging.getLogger('django.db.backends')
+    # l.setLevel(logging.DEBUG)
+    # l.addHandler(logging.StreamHandler())
     # os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'wiki.settings')
 
-    a = ArticleModel.objects.filter(title='aaa19').first()
+    a = ArticleModel.objects.filter(title='aaa24').first()
     print('model', a)
 
-    r = RevisionModel.objects.filter(article_id=a.id).order_by('-created_at').first()
-    print('r', r)
+    # r = RevisionModel.objects.filter(article_id=a.id).order_by('-created_at').first()
+    # print('r', r)
 
-    # s = ArticleSerializer(m)
+    s = ArticleSerializer(a)
     # print(art.is_valid())
-    # print('artd:', s.data)
+    print('artd:', s.data)
     # print('artd:', art.validated_data)
+
+
