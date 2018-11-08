@@ -9,8 +9,7 @@
 
 ### Functionality:
 
-* Registration
-* Login with JWT
+* Registration / Login
 * Article management: create/update/show history
 
 
