@@ -31,7 +31,7 @@ $(function () {
 
     // create new article
     $(document).on('submit', '#uploadForm', function (e) {
-        console.log($('#uploadForm input:submit').val(), rest_type);
+        const rest_type = $('#uploadForm input:submit').val() == 'Add' ? 'POST' : 'PUT';
         e.preventDefault();
         $.ajax({
 
