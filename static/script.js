@@ -31,10 +31,12 @@ $(function () {
 
     // create new article
     $(document).on('submit', '#uploadForm', function (e) {
+        console.log($('#uploadForm input:submit').val(), rest_type);
         e.preventDefault();
         $.ajax({
+
             url: $(this).attr('action'),
-            type: 'POST',
+            type: rest_type,
             data: new FormData(this),
             processData: false,
             contentType: false,
@@ -107,12 +109,11 @@ $(function () {
     }
 
 
-    // very terrible function
     function populate_form(form, data) {
         $('[name="title"]', form).val(data.title).attr('readonly', 'readonly');
         $('[name="text"]', form).val(data.revision[0].text);
         $('[type="submit"]', form).val('Update');
-        $('#uploadForm').attr('action', '/articles/edit/');
+        $('#uploadForm').attr('action', '/articles/edit/' + data.id + '/');
     }
 
     // read article

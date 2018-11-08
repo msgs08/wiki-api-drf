@@ -1,6 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import status, generics
-from rest_framework.generics import CreateAPIView, ListAPIView
+from rest_framework.generics import CreateAPIView, ListAPIView, UpdateAPIView
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -25,7 +25,6 @@ class ArticlesListView(ListAPIView):
 class RevisionsView(APIView):
     permission_classes = (IsAuthenticatedOrReadOnly,)
 
-
     def get(self, request, article_id):
         revs = RevisionModel.objects.filter(article_id=article_id).order_by('-created_at').all()
         serializer = RevisionListSerializer(revs, many=True)
@@ -45,9 +44,11 @@ class ArticleAddView(CreateAPIView):
         return self.create(request, *args, **kwargs)
 
 
-class ArticleEditView(CreateAPIView):
+class ArticleEditView(UpdateAPIView):
     permission_classes = (AllowAny,)
-    get_serializer = RevisionLastSerializer
+    get_serializer = ArticleSerializer
+    queryset = ArticleModel.objects
 
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+    def put(self, request, *args, **kwargs):
+        return self.update(request, *args, **kwargs)
+

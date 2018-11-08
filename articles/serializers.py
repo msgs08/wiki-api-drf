@@ -29,12 +29,12 @@ class RevisionLastSerializer(serializers.ModelSerializer):
         title = validated_data.get('title')
         article = ArticleModel.objects.filter(title=title).first()
 
-        rev = RevisionModel.objects.create(
+        RevisionModel.objects.create(
             article=article,
             text=validated_data['text'],
         )
 
-        return rev
+        return article
 
 
 class RevisionListSerializer(serializers.ModelSerializer):
@@ -54,10 +54,7 @@ class ArticleSerializer(serializers.ModelSerializer):
         fields = ('id', 'title', 'text', 'revision')
 
     def create(self, validated_data):
-        print('data:', validated_data)
-        article = ArticleModel.objects.create(
-            title=validated_data['title'],
-        )
+        article = ArticleModel.objects.create(title=validated_data['title'])
 
         RevisionModel.objects.create(
             user=validated_data.get('user'),
@@ -67,4 +64,12 @@ class ArticleSerializer(serializers.ModelSerializer):
         )
 
         # FIXME: save single commit !!!
+        return article
+
+    def update(self, article, validated_data):
+        print('upd')
+        RevisionModel.objects.create(
+            article=article,
+            text=validated_data['text'],
+        )
         return article
