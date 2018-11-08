@@ -63,8 +63,6 @@ $(function () {
     });
 
     function draw_article(data, is_full) {
-        console.log('draw article', data, is_full)
-
         const article = document.createElement('div');
         article.setAttribute('class', 'article');
 
@@ -125,14 +123,12 @@ $(function () {
             url: HOST + 'articles/read/' + el.attr(ATTR_ID_KEY) + '/',
             context: document.body
         }).done(function (data) {
-            console.log('done', data);
             draw_article(data = data, is_full = true);
         });
     });
 
     // edit article
     $(document).on('click', '.article a.edit', function () {
-        console.log('edit')
         var el = $(this)
         show_form();
 
@@ -141,7 +137,6 @@ $(function () {
             url: HOST + 'articles/read/' + el.attr(ATTR_ID_KEY) + '/',
             context: document.body
         }).done(function (data) {
-            console.log('done', data);
             form = $('#uploadForm');
             populate_form(form = form, data = data);
         });
@@ -160,7 +155,6 @@ $(function () {
             const app = document.getElementById('container');
 
             data.forEach(function (cur_rev) {
-                console.log('k,v', cur_rev);
                 const li = document.createElement('li');
                 var d = new Date(cur_rev.created_at);
                 data_text = d.getHours() + ':' + d.getMinutes() + ' ' + d.getDay() + '.' + d.getMonth() + '.' + d.getFullYear();
