@@ -1,5 +1,12 @@
+from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from articles.models import ArticleModel, RevisionModel
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = get_user_model()
+        fields = ('id', 'username')
 
 
 class FilteredListSerializer(serializers.ListSerializer):
@@ -8,7 +15,7 @@ class FilteredListSerializer(serializers.ListSerializer):
         return super(FilteredListSerializer, self).to_representation(data)
 
 
-class RevisionSerializer(serializers.ModelSerializer):
+class RevisionLastSerializer(serializers.ModelSerializer):
     title = serializers.CharField(
         write_only=True,
     )
@@ -30,25 +37,34 @@ class RevisionSerializer(serializers.ModelSerializer):
         return rev
 
 
+class RevisionListSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+
+    class Meta:
+        model = RevisionModel
+        fields = ('id', 'text', 'user', 'ip_addr', 'created_at')
+
+
 class ArticleSerializer(serializers.ModelSerializer):
     text = serializers.CharField(write_only=True)
-    # user = UserSerializer(required=False)  # May be an anonymous user.
-    revisions = RevisionSerializer(read_only=True, many=True)
+    revision = RevisionLastSerializer(read_only=True, many=True)
 
     class Meta:
         model = ArticleModel
-        fields = ('id', 'title', 'text', 'revisions')
+        fields = ('id', 'title', 'text', 'revision')
 
     def create(self, validated_data):
+        print('data:', validated_data)
         article = ArticleModel.objects.create(
             title=validated_data['title'],
-            user=validated_data.get('user'),
         )
 
         RevisionModel.objects.create(
+            user=validated_data.get('user'),
             article=article,
             text=validated_data['text'],
+            ip_addr=validated_data['ip_addr'],
         )
 
-        # FIXME: commit in one transaction
+        # FIXME: save single commit !!!
         return article

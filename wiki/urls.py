@@ -29,7 +29,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('simple-ui', TemplateView.as_view(template_name='index.html')),
+    path('simple-ui/', TemplateView.as_view(template_name='index.html')),
     # path('simple-ui', index),
     path('swagger/', schema_view),
     path('admin/', admin.site.urls),
