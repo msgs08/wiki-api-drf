@@ -29,11 +29,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('ui/', TemplateView.as_view(template_name='index.html')),
+    path('ui/', TemplateView.as_view(template_name='index.html')),  # simple javascript UI
     path('swagger/', schema_view),
     path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-    path('auth/', include('auth.urls')),
+    path('api-auth/', include('rest_framework.urls')),  # base drf auth api
+    path('users/', include('users.urls')),
     path('articles/', include('articles.urls'), name='articles'),
 ]
 

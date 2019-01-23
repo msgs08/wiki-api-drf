@@ -4,7 +4,5 @@ CREATE DATABASE `drf_simple_wiki`
     DEFAULT COLLATE utf8_general_ci;
 
 USE 'mysql';
-GRANT ALL PRIVILEGES ON mydb.* TO 'root'@'localhost' IDENTIFIED BY 'root'
-
-WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON mydb.* TO 'root'@'localhost' IDENTIFIED BY 'root' WITH GRANT OPTION;
 FLUSH PRIVILEGES;
