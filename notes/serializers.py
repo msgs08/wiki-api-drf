@@ -1,18 +1,18 @@
 from rest_framework import serializers
 
 from articles.serializers import UserSerializer
-from posts.models import PostModel
+from .models import NoteModel
 
 
-class PostSerializer(serializers.ModelSerializer):
+class NoteSerializer(serializers.ModelSerializer):
     user = UserSerializer(read_only=True)
 
     class Meta:
-        model = PostModel
-        fields = ('id', 'user', 'content')
+        model = NoteModel
+        fields = ('id', 'user', 'content', 'created_at')
 
     def create(self, validated_data):
-        post = PostModel.objects.create(
+        post = NoteModel.objects.create(
             user=validated_data['user'],
             content=validated_data['content'],
         )

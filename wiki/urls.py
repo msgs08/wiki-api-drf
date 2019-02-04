@@ -35,7 +35,7 @@ urlpatterns = [
     path('api-auth/', include('rest_framework.urls')),  # base drf auth api
     path('users/', include('users.urls')),
     path('articles/', include('articles.urls'), name='articles'),
-    path('posts/', include('posts.urls'), name='posts'),
+    path('notes/', include('notes.urls'), name='notes'),
 ]
 
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
